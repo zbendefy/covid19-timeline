@@ -23,8 +23,10 @@ function splitCsvLine(line){
         }
         currentEntry += line[i];
     }
+    ret.push(currentEntry);
     return ret;
 }
+
 
 function ConvertDate(dateStr){
     [month, day, year] = dateStr.split("/");

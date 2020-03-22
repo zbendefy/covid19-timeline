@@ -106,18 +106,20 @@
 			let infectedCount = Number.parseInt( getLatestAvailableData(data_cases, timeEntries, currentTimeline) );
 			let deadCount = Number.parseInt( getLatestAvailableData(data_deaths, timeEntries, currentTimeline) );
 			let recoveredCount = Number.parseInt( getLatestAvailableData(data_recovered, timeEntries, currentTimeline) );
+			let province_state = data_cases["Province/State"] == "" ? "" : (data_cases["Province/State"] + "<br/>");
+			let text = `<b>${data_cases["Country/Region"]}</b><br/>${province_state}Infected: <font color="orange">${numberWithCommas(infectedCount)}</font><br/>Dead: <font color="red">${numberWithCommas(deadCount)}</font><br/>Recovered: <font color="green">${numberWithCommas(recoveredCount)}</font>`;
 			if (infectedCount > 0){
 				circles.push( L.circle([data_cases.Lat, data_cases.Long], Math.sqrt(4000000.0 * infectedCount), {
 					color: '#e01',
 					fillColor: '#f03',
 					fillOpacity: 0.5
-				}).addTo(mymap).bindPopup(`${data_cases["Country/Region"]}<br/>Infected: <font color="orange">${infectedCount}</font><br/>Dead: <font color="red">${deadCount}</font><br/>Recovered: <font color="green">${recoveredCount}</font>`) );
+				}).addTo(mymap).bindPopup(text) );
 				
 				circles.push( L.circle([data_cases.Lat, data_cases.Long], Math.sqrt(4000000.0 * deadCount), {
 					color: '#f00',
 					fillColor: '#f00',
 					fillOpacity: 1.0
-				}).addTo(mymap).bindPopup(`${data_cases["Country/Region"]}<br/>Infected: <font color="orange">${infectedCount}</font><br/>Dead: <font color="red">${deadCount}</font><br/>Recovered: <font color="green">${recoveredCount}</font>`) );
+				}).addTo(mymap).bindPopup(text) );
 			}
 		}
 	}
