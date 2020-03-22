@@ -107,13 +107,13 @@
 			let deadCount = Number.parseInt( getLatestAvailableData(data_deaths, timeEntries, currentTimeline) );
 			let recoveredCount = Number.parseInt( getLatestAvailableData(data_recovered, timeEntries, currentTimeline) );
 			if (infectedCount > 0){
-				circles.push( L.circle([data_cases.Lat, data_cases.Long], Math.sqrt(5000000.0 * infectedCount), {
+				circles.push( L.circle([data_cases.Lat, data_cases.Long], Math.sqrt(4000000.0 * infectedCount), {
 					color: '#e01',
 					fillColor: '#f03',
 					fillOpacity: 0.5
 				}).addTo(mymap).bindPopup(`${data_cases["Country/Region"]}<br/>Infected: <font color="orange">${infectedCount}</font><br/>Dead: <font color="red">${deadCount}</font><br/>Recovered: <font color="green">${recoveredCount}</font>`) );
 				
-				circles.push( L.circle([data_cases.Lat, data_cases.Long], Math.sqrt(5000000.0 * deadCount), {
+				circles.push( L.circle([data_cases.Lat, data_cases.Long], Math.sqrt(4000000.0 * deadCount), {
 					color: '#f00',
 					fillColor: '#f00',
 					fillOpacity: 1.0
@@ -126,7 +126,10 @@
 
 </script>
 
-
+<a href="https://github.com/zbendefy/covid19-timeline" class="githublink">
+	<img src="GitHub-Mark-Light-32px.png" class="githublogo" >
+	</img>
+</a>
 
 </body>
 </html>

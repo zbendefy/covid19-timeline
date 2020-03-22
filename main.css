@@ -16,7 +16,7 @@ body{
 }
 
 #title{
-    font-size: 3em;
+    font-size: 2em;
 }
 
 .caption{
@@ -34,7 +34,7 @@ body{
 
 #date{
     width: 100%; 
-    font-size: 2em;
+    font-size: 1.6em;
     color: #999999;
 }
 
@@ -69,7 +69,7 @@ body{
     padding:20px;
     background-color: #777777;
     color: #eeeeee;
-    font-size: 1.5em;
+    font-size: 1.2em;
     position: absolute;
     left: 60%;
     right: 10%;
@@ -77,4 +77,15 @@ body{
     height: 1em;
     opacity: 50%;
     border-radius: 30px 30px 30px 30px;
+}
+
+.githublink{
+    position: fixed;
+    margin:15px;
+    right: 0px;
+    top: 0px;
+}
+
+.githublogo{
+    opacity: 70%;
 }
