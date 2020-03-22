@@ -1,0 +1,80 @@
+html, body {
+    height:100% 
+}
+
+body{
+    background-color: #222222;
+}
+
+#flexcontainer{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 98%;
+    margin-left:3%;
+    margin-right:3%;
+}
+
+#title{
+    font-size: 3em;
+}
+
+.caption{
+    color: #777777;
+}
+
+#timelineSlider{
+    width: 100%; 
+    height: 5%;
+}
+
+#mapid{
+    flex-grow: 1;
+}
+
+#date{
+    width: 100%; 
+    font-size: 2em;
+    color: #999999;
+}
+
+#datasrc{
+    font-size: 0.8em;
+}
+
+#datelist{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    height:4em;
+}
+
+.dateListElement{
+    font-size: 1em;
+    transform-origin: 2em 2em;
+    transform: rotate(-85deg);
+    color: #999999;
+    width: 0px;
+    flex-shrink: 1;
+    flex-grow: 1;
+}
+
+.dateListElement.highlight{
+    color: #bbbbbb;
+    font-weight: bold;
+}
+
+#popup{
+    padding:20px;
+    background-color: #777777;
+    color: #eeeeee;
+    font-size: 1.5em;
+    position: absolute;
+    left: 60%;
+    right: 10%;
+    top: 1em;
+    height: 1em;
+    opacity: 50%;
+    border-radius: 30px 30px 30px 30px;
+}
