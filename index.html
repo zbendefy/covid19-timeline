@@ -86,7 +86,7 @@
 		let totalCases = GetTotalCases(csvData_Cases, timeEntries,currentTimeline);
 		let totalDeath = GetTotalCases(csvData_Deaths, timeEntries,currentTimeline);
 		let totalRecovered = GetTotalCases(csvData_Recovered, timeEntries,currentTimeline);
-		popup.innerHTML = "Global cases: <font color='orange'>" + numberWithCommas(totalCases) + "</font>";
+		popup.innerHTML = "Global cases: <font color='orange'><b>" + numberWithCommas(totalCases) + "</b></font>";
 
 		let newHighlightee = dateList.firstChild;
 		for(let i = 0; i < currentTimeline; ++i){
@@ -102,23 +102,23 @@
 		for(let i = 0; i < csvData_Cases.length; ++i){
 			let data_cases = csvData_Cases[i];
 			let data_deaths = csvData_Deaths[i];
-			let data_recovered = csvData_Deaths[i];
+			let data_recovered = csvData_Recovered[i];
 			let infectedCount = Number.parseInt( getLatestAvailableData(data_cases, timeEntries, currentTimeline) );
 			let deadCount = Number.parseInt( getLatestAvailableData(data_deaths, timeEntries, currentTimeline) );
 			let recoveredCount = Number.parseInt( getLatestAvailableData(data_recovered, timeEntries, currentTimeline) );
 			let province_state = data_cases["Province/State"] == "" ? "" : (data_cases["Province/State"] + "<br/>");
 			let text = `<b>${data_cases["Country/Region"]}</b><br/>${province_state}Infected: <font color="orange">${numberWithCommas(infectedCount)}</font><br/>Dead: <font color="red">${numberWithCommas(deadCount)}</font><br/>Recovered: <font color="green">${numberWithCommas(recoveredCount)}</font>`;
 			if (infectedCount > 0){
-				circles.push( L.circle([data_cases.Lat, data_cases.Long], Math.sqrt(4000000.0 * infectedCount), {
+				circles.push( L.circle([data_cases.Lat, data_cases.Long], Math.sqrt(3000000.0 * infectedCount), {
 					color: '#e01',
 					fillColor: '#f03',
-					fillOpacity: 0.5
+					fillOpacity: 0.35
 				}).addTo(mymap).bindPopup(text) );
 				
-				circles.push( L.circle([data_cases.Lat, data_cases.Long], Math.sqrt(4000000.0 * deadCount), {
+				circles.push( L.circle([data_cases.Lat, data_cases.Long], Math.sqrt(3000000.0 * deadCount), {
 					color: '#f00',
 					fillColor: '#f00',
-					fillOpacity: 1.0
+					fillOpacity: 0.8
 				}).addTo(mymap).bindPopup(text) );
 			}
 		}
