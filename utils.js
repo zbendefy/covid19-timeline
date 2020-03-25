@@ -62,7 +62,8 @@ function getLatestAvailableData( datapoints, timeEntries, currentTimeline ){
     let actualTimelineId = currentTimeline;
     while( datapoints[timeEntries[actualTimelineId]] === undefined && actualTimelineId > 0)
       --actualTimelineId;
-    return Number.parseInt( datapoints[timeEntries[actualTimelineId]] );
+    let ret = Number.parseInt( datapoints[timeEntries[actualTimelineId]] );
+    return Number.isNaN(ret) ? 0 : ret;
 }
 
 function parseTimeline(csv){
