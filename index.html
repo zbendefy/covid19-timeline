@@ -44,9 +44,9 @@
 		zoomOffset: -1
 	}).addTo(mymap);
 
-	var csvContent_cases = loadFile("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv");
-	var csvContent_deaths = loadFile("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv");
-	var csvContent_recov = loadFile("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv");
+	var csvContent_cases = loadFile("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv");
+	var csvContent_deaths = loadFile("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv");
+	var csvContent_recov = loadFile("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv");
 	var csvData_Cases = parseCsv(csvContent_cases);
 	var csvData_Deaths = parseCsv(csvContent_deaths);
 	var csvData_Recovered = parseCsv(csvContent_recov);
