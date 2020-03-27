@@ -47,9 +47,7 @@
 	var csvContent_cases = loadFile("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv");
 	var csvContent_deaths = loadFile("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv");
 	var csvContent_recov = loadFile("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv");
-	var csvData_Cases = parseCsv(csvContent_cases);
-	var csvData_Deaths = parseCsv(csvContent_deaths);
-	var csvData_Recovered = parseCsv(csvContent_recov);
+	var compiledData = CompileData(csvContent_cases, csvContent_deaths, csvContent_recov);
 	var timeEntries = parseTimeline(csvContent_cases);
 	var currentTimeline = timeEntries.length - 1;
 
@@ -83,9 +81,7 @@
 		}
 		circles = [];
 
-		let totalCases = GetTotalCases(csvData_Cases, timeEntries,currentTimeline);
-		let totalDeath = GetTotalCases(csvData_Deaths, timeEntries,currentTimeline);
-		let totalRecovered = GetTotalCases(csvData_Recovered, timeEntries,currentTimeline);
+		let totalCases = GetTotalCases("infected", compiledData, timeEntries,currentTimeline);
 		popup.innerHTML = "Global cases: <font color='orange'><b>" + numberWithCommas(totalCases) + "</b></font>";
 
 		let newHighlightee = dateList.firstChild;
@@ -99,23 +95,20 @@
 			highlightedDateLabel = newHighlightee;
 		}
 
-		for(let i = 0; i < csvData_Cases.length; ++i){
-			let data_cases = csvData_Cases[i];
-			let data_deaths = csvData_Deaths[i];
-			let data_recovered = csvData_Recovered[i];
-			let infectedCount = Number.parseInt( getLatestAvailableData(data_cases, timeEntries, currentTimeline) );
-			let deadCount = Number.parseInt( getLatestAvailableData(data_deaths, timeEntries, currentTimeline) );
-			let recoveredCount = Number.parseInt( getLatestAvailableData(data_recovered, timeEntries, currentTimeline) );
-			let province_state = data_cases["Province/State"] == "" ? "" : (data_cases["Province/State"] + "<br/>");
-			let text = `<b>${data_cases["Country/Region"]}</b><br/>${province_state}Infected: <font color="orange">${numberWithCommas(infectedCount)}</font><br/>Dead: <font color="red">${numberWithCommas(deadCount)}</font><br/>Recovered: <font color="green">${numberWithCommas(recoveredCount)}</font>`;
+		for(let countryData of Object.values( compiledData ) ) {
+			let infectedCount = Number.parseInt( getLatestAvailableData(countryData.infected, timeEntries, currentTimeline) );
+			let deadCount = Number.parseInt( getLatestAvailableData(countryData.dead, timeEntries, currentTimeline) );
+			let recoveredCount = Number.parseInt( getLatestAvailableData(countryData.recovered, timeEntries, currentTimeline) );
+			let province_state = countryData.infected["Province/State"] == "" ? "" : (countryData.infected["Province/State"] + "<br/>");
+			let text = `<b>${countryData.infected["Country/Region"]}</b><br/>${province_state}Infected: <font color="orange">${numberWithCommas(infectedCount)}</font><br/>Dead: <font color="red">${numberWithCommas(deadCount)}</font><br/>Recovered: <font color="green">${numberWithCommas(recoveredCount)}</font>`;
 			if (infectedCount > 0){
-				circles.push( L.circle([data_cases.Lat, data_cases.Long], Math.sqrt(3000000.0 * infectedCount), {
+				circles.push( L.circle([countryData.infected.Lat, countryData.infected.Long], Math.sqrt(600000.0 * infectedCount), {
 					color: '#e01',
 					fillColor: '#f03',
 					fillOpacity: 0.35
 				}).addTo(mymap).bindPopup(text) );
 				
-				circles.push( L.circle([data_cases.Lat, data_cases.Long], Math.sqrt(3000000.0 * deadCount), {
+				circles.push( L.circle([countryData.infected.Lat, countryData.infected.Long], Math.sqrt(600000.0 * deadCount), {
 					color: '#f00',
 					fillColor: '#f00',
 					fillOpacity: 0.8

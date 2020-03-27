@@ -54,11 +54,40 @@ function parseCsv(csv){
     return result;
 }
 
+function CompileData(csv_infected, csv_deaths, csv_recovered){
+    let ret = {};
+    
+    let csvData_Cases = parseCsv(csv_infected);
+	let csvData_Deaths = parseCsv(csv_deaths);
+	let csvData_Recovered = parseCsv(csv_recovered);
+
+    for (let d of csvData_Cases){
+        ret[ d["Country/Region"] + ";" + d["Province/State"] ] = {infected:"0", dead:"0", recovered:"0"};
+        ret[ d["Country/Region"] + ";" + d["Province/State"] ].infected = d;
+    }
+
+    for (let d of csvData_Deaths){
+        if ( ret[ d["Country/Region"] + ";" + d["Province/State"] ] === undefined )
+            ret[ d["Country/Region"] + ";" + d["Province/State"] ] = {infected:"0", dead:"0", recovered:"0"};
+        ret[ d["Country/Region"] + ";" + d["Province/State"] ].dead = d;
+    }
+
+    for (let d of csvData_Recovered){
+        if ( ret[ d["Country/Region"] + ";" + d["Province/State"] ] === undefined )
+            ret[ d["Country/Region"] + ";" + d["Province/State"] ] = {infected:"0", dead:"0", recovered:"0"};
+        ret[ d["Country/Region"] + ";" + d["Province/State"] ].recovered = d;
+    }
+
+    return ret;
+}
+
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function getLatestAvailableData( datapoints, timeEntries, currentTimeline ){
+    if (datapoints == undefined)
+        return 0;
     let actualTimelineId = currentTimeline;
     while( datapoints[timeEntries[actualTimelineId]] === undefined && actualTimelineId > 0)
       --actualTimelineId;
@@ -72,10 +101,10 @@ function parseTimeline(csv){
     return headers.slice(4);
 }
 
-function GetTotalCases(parsedData, timeEntries, timeEntryId){
+function GetTotalCases(category, parsedData, timeEntries, timeEntryId){
     let total = 0;
-    for(let i = 0; i < parsedData.length; ++i){
-        total += getLatestAvailableData(parsedData[i], timeEntries, timeEntryId);
+    for(let data of Object.values(parsedData)){
+        total += getLatestAvailableData(data[category], timeEntries, timeEntryId);
     }
     return total;
 }
