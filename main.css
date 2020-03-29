@@ -16,7 +16,7 @@ body{
 }
 
 #title{
-    font-size: 2em;
+    font-size: 1.9em;
 }
 
 .caption{
@@ -25,7 +25,7 @@ body{
 
 #timelineSlider{
     width: 100%; 
-    height: 5%;
+    height: 2em;
 }
 
 #mapid{
@@ -42,26 +42,39 @@ body{
     font-size: 0.8em;
 }
 
+#dateListPanel{
+}
+
 #datelist{
+    position: relative;
     display:flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: stretch;
+    top: 0.5em;
+    left: 0;
     width: 100%;
-    height:4em;
+    height:5em;
 }
 
 .dateListElement{
     font-size: 1em;
     transform-origin: 2em 2em;
-    transform: rotate(-85deg);
+    transform: rotate(-75deg);
     color: #999999;
-    width: 0px;
+    width: 1.4em;
     flex-shrink: 1;
     flex-grow: 1;
+    margin: 0px;
 }
 
 .dateListElement.highlight{
-    color: #bbbbbb;
+    color: #eeeeee;
+    font-weight: bold;
+}
+
+.dateListElement:hover{
+    color: #cccccc;
     font-weight: bold;
 }
 
@@ -88,4 +101,8 @@ body{
 
 .githublogo{
     opacity: 70%;
+}
+
+.unselectable{
+    user-select: none;
 }

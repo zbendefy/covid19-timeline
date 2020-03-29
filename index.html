@@ -13,8 +13,6 @@
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
-
-
 	
 </head>
 <body>
@@ -22,7 +20,9 @@
 <div id="flexcontainer">
 	<div id="title" class="caption">COVID-19 Timeline</div>
 	<div id="date" class="caption"></div>
-	<div id="datelist"></div>
+	<div id="dateListPanel" class="caption">
+		<div id="datelist"></div>
+	</div>
 	<input id="timelineSlider" oninput="currentTimeline=this.value; updateView();" type="range" min="0" max="0" value="0" step="1" ></input>
 	<div id="mapid"></div>
 	<div id="datasrc" class="caption">Data source: <a class="caption link" href="https://github.com/CSSEGISandData/COVID-19">https://github.com/CSSEGISandData/COVID-19</a> </div>
@@ -62,8 +62,13 @@
 		let lblidx_copy = lblidx;
 		var para = document.createElement("P");
 		para.innerText = dateStr;
-		//para.onclick = ()=>{ timelineSlider.value = lblidx_copy; }
+		para.onclick = ()=>{
+			 timelineSlider.value = lblidx_copy;
+			 currentTimeline = lblidx_copy;
+			 updateView();
+		}
 		para.classList.add("dateListElement");
+		para.classList.add("unselectable");
 		dateList.appendChild(para);  
 		++lblidx;
 	}
@@ -73,6 +78,22 @@
 	var timelineSlider = document.getElementById("timelineSlider");
 	timelineSlider.max=timeEntries.length - 1;
 	timelineSlider.value = currentTimeline;
+
+	function updateLabelSizing(){
+		dateListContentWidth = dateList.firstChild.clientWidth * timeEntries.length;
+		let offscreenWidth = dateListContentWidth - dateList.clientWidth;
+		let pan = 0.0;
+		if ( offscreenWidth > 0 )
+		{
+			let selectedTimelinePercentageValue = currentTimeline / (timeEntries.length-1.0);
+			pan = selectedTimelinePercentageValue * offscreenWidth;
+		}
+		dateList.style.left = `${-pan}px`;
+	}
+
+	window.onresize = function(){
+		updateLabelSizing();
+	};
 
 	function updateView(){
 		dateDisplay.textContent = "Current date: " + ConvertDate( timeEntries[currentTimeline] );
@@ -94,6 +115,8 @@
 			newHighlightee.classList.add("highlight");
 			highlightedDateLabel = newHighlightee;
 		}
+
+		updateLabelSizing();
 
 		for(let countryData of Object.values( compiledData ) ) {
 			let infectedCount = Number.parseInt( getLatestAvailableData(countryData.infected, timeEntries, currentTimeline) );
