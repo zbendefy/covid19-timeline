@@ -44,9 +44,9 @@
 		zoomOffset: -1
 	}).addTo(mymap);
 
-	var csvContent_cases = loadFile("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv");
+	var csvContent_cases =  loadFile("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv");
 	var csvContent_deaths = loadFile("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv");
-	var csvContent_recov = loadFile("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv");
+	var csvContent_recov =  loadFile("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv");
 	var compiledData = CompileData(csvContent_cases, csvContent_deaths, csvContent_recov);
 	var timeEntries = parseTimeline(csvContent_cases);
 	var currentTimeline = timeEntries.length - 1;
