@@ -80,7 +80,7 @@
 	timelineSlider.value = currentTimeline;
 
 	function updateLabelSizing(){
-		dateListContentWidth = dateList.firstChild.clientWidth * timeEntries.length;
+		dateListContentWidth = (dateList.firstChild.clientWidth+0.5) * (timeEntries.length-1);
 		let offscreenWidth = dateListContentWidth - dateList.clientWidth;
 		let pan = 0.0;
 		if ( offscreenWidth > 0 )
