@@ -125,13 +125,13 @@
 			let province_state = countryData.infected["Province/State"] == "" ? "" : (countryData.infected["Province/State"] + "<br/>");
 			let text = `<b>${countryData.infected["Country/Region"]}</b><br/>${province_state}Infected: <font color="orange">${numberWithCommas(infectedCount)}</font><br/>Dead: <font color="red">${numberWithCommas(deadCount)}</font><br/>Recovered: <font color="green">${numberWithCommas(recoveredCount)}</font>`;
 			if (infectedCount > 0){
-				circles.push( L.circle([countryData.infected.Lat, countryData.infected.Long], Math.sqrt(900000.0 * infectedCount), {
+				circles.push( L.circle([countryData.infected.Lat, countryData.infected.Long], Math.sqrt(80000.0 * infectedCount), {
 					color: '#e01',
 					fillColor: '#f03',
 					fillOpacity: 0.35
 				}).addTo(mymap).bindPopup(text) );
 				
-				circles.push( L.circle([countryData.infected.Lat, countryData.infected.Long], Math.sqrt(900000.0 * deadCount), {
+				circles.push( L.circle([countryData.infected.Lat, countryData.infected.Long], Math.sqrt(80000.0 * deadCount), {
 					color: '#f00',
 					fillColor: '#f00',
 					fillOpacity: 0.8
