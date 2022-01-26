@@ -122,8 +122,9 @@
 			let infectedCount = Number.parseInt( getLatestAvailableData(countryData.infected, timeEntries, currentTimeline) );
 			let deadCount = Number.parseInt( getLatestAvailableData(countryData.dead, timeEntries, currentTimeline) );
 			let recoveredCount = Number.parseInt( getLatestAvailableData(countryData.recovered, timeEntries, currentTimeline) );
+			let recovered_str = (infectedCount > 10 && recoveredCount == 0) ? "N/A" : numberWithCommas(recoveredCount);
 			let province_state = countryData.infected["Province/State"] == "" ? "" : (countryData.infected["Province/State"] + "<br/>");
-			let text = `<b>${countryData.infected["Country/Region"]}</b><br/>${province_state}Infected: <font color="orange">${numberWithCommas(infectedCount)}</font><br/>Dead: <font color="red">${numberWithCommas(deadCount)}</font><br/>Recovered: <font color="green">${numberWithCommas(recoveredCount)}</font>`;
+			let text = `<b>${countryData.infected["Country/Region"]}</b><br/>${province_state}Infected: <font color="orange">${numberWithCommas(infectedCount)}</font><br/>Dead: <font color="red">${numberWithCommas(deadCount)}</font><br/>Recovered: <font color="green">${recovered_str}</font>`;
 			if (infectedCount > 0){
 				circles.push( L.circle([countryData.infected.Lat, countryData.infected.Long], Math.pow(infectedCount*1400000, 0.4), {
 					color: '#e01',
